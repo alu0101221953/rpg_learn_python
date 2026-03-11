@@ -1,0 +1,1 @@
+# Entity interface for most entities in the game, such as players, NPCs, enemies

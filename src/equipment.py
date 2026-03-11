@@ -1,0 +1,1 @@
+# Equipment interface for items that can be equipped by entities such as weapons, armor, accessories
