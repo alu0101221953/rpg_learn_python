@@ -1,5 +1,3 @@
-# Entity interface for most entities in the game, such as players, NPCs, enemies
-
 class Entity:
     def __init__(self, name, hp, stats):
         self.name = name
