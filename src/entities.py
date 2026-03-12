@@ -52,3 +52,4 @@ class Enemy(Entity):
         super().__init__(name, hp, stats)
         self.cr = cr
         self.base_ac = api_data.get('armor_class', 10)
+
