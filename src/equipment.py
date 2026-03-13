@@ -25,7 +25,6 @@ class Weapon(Item):
             self.damage_type = d_type if d_type else 'bludgeoning'
 
         properties = api_data.get('properties', [])
-        # Buscamos 'finesse' en la lista (asegurándonos de que sean strings)
         if any('finesse' in str(p).lower() for p in properties):
             self.scaling = 'dex'
         else:
@@ -55,5 +54,4 @@ class Armor(Item):
                     mod_value = min(mod_value, self.plus_cap)
                 
                 ac_bonus += mod_value
-                
         return ac_bonus

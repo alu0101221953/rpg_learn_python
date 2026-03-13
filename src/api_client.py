@@ -21,18 +21,12 @@ def get_monsters_cr(cr):
     return monster_ids
 
 def get_monster_details(monster_id):
-    response = get(f"{BASE_URL}{monster_id}/")
+    response = get(f"{BASE_URL}v1/monsters/{monster_id}/")
     if response.status_code == 200:
         return response.json()
     else:
         print(f"Error fetching monster details: {response.status_code}")
         return None
-    
-def get_monster_image(monster_id):
-    details = get_monster_details(monster_id)
-    if details and 'image' in details:
-        return details['image']
-    return None
     
 def get_weapons():
     weapon_ids = []
@@ -136,9 +130,3 @@ def get_spell_details(spell_id):
     else:
         print(f"Error fetching spell details: {response.status_code}")
         return None
-    
-def get_spell_image(spell_id):
-    details = get_spell_details(spell_id)
-    if details and 'image' in details:
-        return details['image']
-    return None

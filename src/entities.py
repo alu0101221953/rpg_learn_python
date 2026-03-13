@@ -1,9 +1,12 @@
+from api_client import *
+
 class Entity:
     def __init__(self, name, hp, stats):
         self.name = name
         self.max_hp = hp
         self.hp = hp
         self.base_ac = 10
+        self.bonus_ac = 0
         self.equipment = {"weapon": None, "armor": None, "shield": None}
 
         self.str_mod = self._calculate_stat_mod(stats.get('str', 10))
@@ -13,11 +16,20 @@ class Entity:
         self.wis_mod = self._calculate_stat_mod(stats.get('wis', 10))
         self.cha_mod = self._calculate_stat_mod(stats.get('cha', 10))
 
-    @property
-    def ac(self):
+    def equip_weapon(self, weapon):
+        self.equipment["weapon"] = weapon
+    def equip_armor(self, armor):
+        self.equipment["armor"] = armor
+    def equip_shield(self, shield):
+        self.equipment["shield"] = shield
+
+    def calculate_ac(self):
+        ac = self.base_ac + self.bonus_ac
         if self.equipment["armor"]:
-            return self.base_ac + self.equipment["armor"].ac_bonus
-        return self.base_ac + self.dex_mod
+            ac += self.equipment["armor"].get_ac_bonus(self)
+        if self.equipment["shield"]:
+            ac += 2  # Bonus fijo por escudo
+        return ac
 
     def _calculate_stat_mod(self, stat):
         return (stat - 10) // 2
@@ -51,3 +63,10 @@ class Enemy(Entity):
         self.cr = cr
         self.base_ac = api_data.get('armor_class', 10)
 
+if __name__ == "__main__":
+    monster_data = get_monsters_cr(7)
+    monster = Enemy(get_monster_details(monster_data[0]))
+    print(
+        f"Nombre: {monster.name}, HP: {monster.hp}, AC: {monster.calculate_ac()}, STR mod: {monster.str_mod}, DEX mod: {monster.dex_mod}, "
+        f"CON mod: {monster.con_mod}, INT mod: {monster.int_mod}, WIS mod: {monster.wis_mod}, CHA mod: {monster.cha_mod}"
+    )
