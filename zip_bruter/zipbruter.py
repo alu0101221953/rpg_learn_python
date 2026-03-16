@@ -6,7 +6,7 @@ force attack vector for this, so you must have
 strong wordlist.
 
 Usage:
-    python3 zipbruter.py -f <encrypted_zip_file> -w <wordlist> -t <threads>
+    python zipbruter.py -f <encrypted_zip_file> -w <wordlist> -m <max_length> -t <threads>
 """
 
 from sys import exit as exit_
